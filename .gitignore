@@ -40,3 +40,13 @@ tmtagsHistory
 *.sublime-workspace
 .bundle
 *.swp
+
+# Secrets #
+####################
+*private*
+private
+secrets
+*secrets*
+secrets.py
+keys.py
+
