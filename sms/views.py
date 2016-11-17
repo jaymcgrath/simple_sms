@@ -1,11 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from twilio.rest import TwilioRestClient
-from private.secrets import ACCOUNT_SID, AUTH_TOKEN
-
+from .models import Message
 from .forms import MessageForm
-
+from twilio import TwilioRestException
+import datetime
 # Create your views here.
 
 @csrf_exempt
@@ -22,25 +21,22 @@ def send(request):
         # check whether it's valid:
         if form.is_valid():
             # process the data in form.cleaned_data as required
+            try:
+                number = request.POST['number']
+                message = request.POST['message']
+                this_message = Message(number=number, message=message)
+                this_message.save()
+                context = {'form': form, 'messages': "Sentit"}
+            except TwilioRestException as e:
+                context = {'form': form, 'messages': str(e)}
 
-            client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
-
-            number = request.POST['number']
-            message = request.POST['message']
-            result = client.messages.create(to=number, from_="+14243512633", body=message)
-
-            response = {'result': 'success!!!!!!!!!'}
-            return JsonResponse(response)
 
     # if a GET (or any other method) we'll create a blank form
     else:
         form = MessageForm()
+        context = {'form': form}
 
-    return render(request, 'send.html', {'form': form})
+    return render(request, 'send.html', context)
 
-@csrf_exempt
-def sent(request):
-
-    return render(request)
 
 

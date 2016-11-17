@@ -8,12 +8,15 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"><link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   </head>
+
 <body>
-<form action="" method="post">
-{{ form.as_p}}
-<input type="submit" value="button">
-</form>
-<button class="btn-info"><span class="glyphicon glyphicon-phone"></span>Send that puppy</button>
+
+    {{ messages }}
+    {{ form.errors }}
+    <form action="" method="post">
+    {{ form.as_p }}
+    <input type="submit" value="Send Message" class="btn-info">
+    </form>
 
 </body>
 <script>

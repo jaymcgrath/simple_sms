@@ -15,10 +15,9 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from sms.views import send, sent
+from sms.views import send
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^send?/$', send),
-    url(r'^sent?/$', sent)
 ]
